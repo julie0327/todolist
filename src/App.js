@@ -10,8 +10,14 @@ Modal.setAppElement('#root')
 
 function App() {
   const [toggle, setToggle] = useState(false);
-  let newDate = new Date();
-  let date = `${newDate.getDate()}/${newDate.getMonth()}`;
+  let date = new Date();
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }
+  //let date = `${newDate.getDate()}/${newDate.getMonth()}`;
   const [text, setText] = useState('');
   const [items, setItem] = useState([]);
   const [modal, setModal] = useState(true);
@@ -63,7 +69,7 @@ function App() {
 
       <main className='main'>
         <h2>Today</h2>
-        <p>{date}</p>
+        <p>{date.toLocaleString('en-US', options)}</p>
         <div>
           <button className='main--button--add' onClick={() => setModal(true)}>
             <i className='material-icons'>add</i>

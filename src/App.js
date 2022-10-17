@@ -73,7 +73,11 @@ function App() {
           <button className='main--button--add' onClick={() => setModal(true)} >
             <i className='material-icons'>add</i>
           </button>
-          <Modal isOpen={modal} onRequestClose={() => setModal(false)} shouldCloseOnOverlayClick={true}>
+          <Modal
+            isOpen={modal}
+            onRequestClose={() => setModal(false)}
+            shouldCloseOnOverlayClick={true}
+          >
             <input className='form' type='text' value={text} onChange={_newText} />
             <button className='modal--button-close' onClick={() => setModal(false)} >
               <i className='material-icons'>close</i>

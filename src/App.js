@@ -6,40 +6,39 @@ import ToDoItem from './ToDoItem';
 import pink from '../src/img/pink.jpg';
 Modal.setAppElement('#root')
 
+const options = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+};
 
 
 function App() {
-  const [toggle, setToggle] = useState(false);
   let date = new Date();
-  const options = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }
-  //let date = `${newDate.getDate()}/${newDate.getMonth()}`;
+  const [toggle, setToggle] = useState(false);
   const [text, setText] = useState('');
   const [items, setItem] = useState([]);
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
 
-  function newText(event) {
+  function _newText(event) {
     setText(event.target.value);
   }
-  function newClick(preValue) {
+  function _newClick(preValue) {
     setItem((preValue) => [...preValue, text]);
     setText('');
   }
-  function deleteItem(id) {
+  function _deleteItem(id) {
     setItem(prevItems => {
       return prevItems.filter((item, index) => {
         return index !== id;
       })
     })
   }
-  function closeModal() {
+  function _closeModal() {
     setModal(false)
   }
-  useEffect(() => { closeModal() }, [items])// submit and close the modal
+  useEffect(() => { _closeModal() }, [items])// submit and close the modal
 
 
 
@@ -48,7 +47,7 @@ function App() {
   return (
     <div>
       <header className="header">
-        <button className="header--button" id="btnNav" type="'button" onClick={() => setToggle(!toggle)}>
+        <button className="header--button" id="btnNav" type="'button" onClick={() => setToggle(!toggle)} >
           <i className="material-icons">menu</i>
         </button>
 
@@ -71,15 +70,15 @@ function App() {
         <h2>Today</h2>
         <p>{date.toLocaleString('en-US', options)}</p>
         <div>
-          <button className='main--button--add' onClick={() => setModal(true)}>
+          <button className='main--button--add' onClick={() => setModal(true)} >
             <i className='material-icons'>add</i>
           </button>
-          <Modal isOpen={modal} >
-            <input className='form' type='text' value={text} onChange={newText} />
-            <button className='modal--button-close' onClick={() => setModal(false)}>
+          <Modal isOpen={modal} onRequestClose={() => setModal(false)} shouldCloseOnOverlayClick={true}>
+            <input className='form' type='text' value={text} onChange={_newText} />
+            <button className='modal--button-close' onClick={() => setModal(false)} >
               <i className='material-icons'>close</i>
             </button>
-            <button className='model--button--done' onClick={newClick} >
+            <button className='model--button--done' onClick={_newClick} >
               <i className='material-icons'>done</i>
             </button>
 
@@ -93,7 +92,7 @@ function App() {
                 text={item}
                 key={index}
                 id={index}
-                onChecked={deleteItem}
+                onChecked={_deleteItem}
               />
             ))}
           </ul>
